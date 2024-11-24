@@ -1,0 +1,45 @@
+# 3. a) To print original string followed by reversed string using stack b) To check whether given string is palindrome or not
+#include<iostream>
+#include<stack>
+#include<string>
+using namespace std;
+
+void reversedString(const string & str){
+    stack<char> s;
+    for(char ch: str)
+        s.push(ch);
+    // print original String
+    cout<<"Original String: "<<str<<endl;
+    
+    cout<<"Reversed String: ";
+    while(!s.empty()){
+        cout<<s.top();
+        s.pop();
+    }
+    cout<<endl;
+}
+
+bool isPalindrome (const string& str){
+    int l = 0 ; int r = str.length() - 1;
+    while( l < r){
+        if(str[l] != str[r]){
+            return false;
+        }
+        l++;
+        r--;
+    }
+    return true;
+}
+
+int main(){
+    string str;
+    cout<<"Enter the String: ";
+    cin>>str;
+    reversedString(str);
+    if(isPalindrome(str)){
+        cout<<"The String is Palindrome"<<endl;
+    }
+    else{
+        cout<<"The String is not Palindrome";
+    }
+}
