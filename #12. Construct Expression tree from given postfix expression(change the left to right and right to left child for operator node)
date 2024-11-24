@@ -1,0 +1,82 @@
+#12. Construct Expression tree from given postfix expression(change the left to right and right to left child for operator node)
+
+
+#include<iostream>
+#include<stack>
+#include<string>
+
+using namespace std;
+
+// Structure for a tree node
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+
+    // Constructor to initialize a node
+    Node(char value) {
+        data = value;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+
+// Function to check if a character is an operator
+bool isOperator(char c) {
+    return (c == '+' || c == '-' || c == '*' || c == '/');
+}
+
+// Function to construct the binary expression tree from a given prefix expression
+Node* constructBinaryTree(string postfix) {
+    stack<Node*> st;
+
+    // Traverse the prefix expression from right to left
+    for (int i = 0; i < postfix.length(); i++) {
+        char ch = postfix[i];
+
+        // If the character is an operand (number), create a new node and push it to the stack
+        if (!isOperator(ch)) {
+            Node* newNode = new Node(ch);  // Operand
+            st.push(newNode);
+        } else {  // If the character is an operator
+            Node* newNode = new Node(ch);  // Operator
+            // Pop two nodes for the left and right children
+            Node* rightChild = st.top();
+            st.pop();
+            Node* leftChild = st.top();
+            st.pop();
+
+            // Assign the left and right children to the new node
+            newNode->left = leftChild;
+            newNode->right = rightChild;
+
+            // Push the new node back to the stack
+            st.push(newNode);
+        }
+    }
+
+    // The root node will be the only node left in the stack
+    return st.top();
+}
+
+// Inorder traversal of the expression tree (to print the expression)
+void inorder(Node* node) {
+    if (node == nullptr) return;
+    inorder(node->left);  // Visit left subtree
+    cout << node->data << " ";  // Visit node (root)
+    inorder(node->right);  // Visit right subtree
+}
+
+int main() {
+    string postfix = "23+45+*";  // Example prefix expression
+
+    // Construct the expression tree
+    Node* root = constructBinaryTree(postfix);
+
+    // Print the inorder traversal of the constructed expression tree
+    cout << "Inorder traversal of the constructed expression tree: ";
+    inorder(root);
+    cout << endl;
+
+    return 0;
+}
