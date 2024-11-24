@@ -1,0 +1,88 @@
+# 4. Implement queue operations using array 
+#include<iostream>
+#include<queue>
+#define MAX 5
+
+using namespace std;
+
+class Queue{
+    private:
+        int arr[MAX];
+        int front;
+        int rear;
+    public:
+        Queue(){
+            front = -1;
+            rear = -1;
+        }
+        bool isfull(){
+            return (rear == MAX -1);
+        }
+        bool isempty(){
+            return (front == -1);
+        }
+        void enqueue(int element){
+            if(isfull()){
+                cout<<"queue is overflow"<<endl;
+            }
+            else{
+                if(front == -1){
+                    front = 0;
+                }
+                rear++;
+                arr[rear] = element;
+                cout<<"Element insert: "<<arr[rear]<<endl;
+            }
+        }
+        void dequeue(){
+            if(isempty()){
+                cout<<"queue is empty"<<endl;
+            }
+            else{
+                cout<<"Dequeue element is "<<arr[front]<<endl;
+                front++;
+                if(front > rear){
+                    front = rear = -1;
+                }
+            }
+        }
+        void display(){
+            if(isempty()){
+                cout<<"queue is empty"<<endl;
+            }
+            else{
+                cout<<"Display list is";
+                for(int i = front; i<=rear; i++){
+                    cout<<arr[i]<<" ";
+                }
+                cout<<endl;
+            }
+        };
+};
+
+int main(){
+    Queue q;
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+    q.enqueue(40);
+    q.enqueue(50);
+    q.display();
+    q.dequeue();
+    q.dequeue();
+    q.display();
+     if(q.isempty()) {
+        cout << "Queue is empty." << endl;
+    } else {
+        cout << "Queue is not empty." << endl;
+    }
+    q.dequeue();
+    q.dequeue();
+    q.dequeue();
+    q.display();
+     if(q.isempty()) {
+        cout << "Queue is empty." << endl;
+    } else {
+        cout << "Queue is not empty." << endl;
+    }
+}
