@@ -1,4 +1,4 @@
-9. Store the final marks of students for subject ADS using BST and perform following operations. 1.Print marks in ascending order 2.Print min and max marks(only remember how to insert)
+# 9. Store the final marks of students for subject ADS using BST and perform following operations. 1.Print marks in ascending order 2.Print min and max marks(only remember how to insert)
 
 #include<iostream>
  using namespace std;
