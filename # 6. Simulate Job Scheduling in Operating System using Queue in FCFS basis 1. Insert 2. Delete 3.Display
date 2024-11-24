@@ -1,0 +1,54 @@
+# 6. Simulate Job Scheduling in Operating System using Queue in FCFS basis 1. Insert 2. Delete
+3.Display
+
+#include<iostream>
+#include<queue>
+#include<string>
+
+using namespace std;
+
+class JobQueue{
+    private:
+        queue<string> JobQue;
+    public:
+        void insertJob(string str){
+            JobQue.push(str);
+            cout<<"Job push is "<<str<<endl;
+        }
+        void deleteJob(){
+            if(!JobQue.empty()){
+                string temp = JobQue.front();
+                JobQue.pop();
+                cout<<"Job removed from queue "<<temp<<endl;
+            }
+            else{
+                cout<<"No job to remove"<<endl;
+            }
+        }
+        void display(){
+            queue<string> temp = JobQue;
+            cout<<"Job in a queue: "<<endl;
+            while(!temp.empty()){
+                cout<<"Job"<<temp.front()<<endl;
+                temp.pop();
+            }
+        }
+};
+
+int main(){
+    JobQueue fcfs;
+    fcfs.insertJob("Job1");
+    fcfs.insertJob("Job2");
+    fcfs.insertJob("Job3");
+    fcfs.insertJob("Job4");
+    fcfs.display();
+    fcfs.deleteJob();
+    fcfs.deleteJob();
+    fcfs.insertJob("Job6");
+    fcfs.display();
+    fcfs.deleteJob();
+    fcfs.deleteJob();
+    fcfs.deleteJob();
+    fcfs.display();
+}
+
