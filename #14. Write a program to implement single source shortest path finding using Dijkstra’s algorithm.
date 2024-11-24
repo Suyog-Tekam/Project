@@ -1,0 +1,81 @@
+#14. Write a program to implement single source shortest path finding using Dijkstra’s algorithm.
+
+
+#include<iostream>
+#include<climits>
+#define N 5
+using namespace std;
+
+void printPath(int parent[], int j) {
+    if (parent[j] == -1) {
+        return;
+    }
+    printPath(parent, parent[j]);
+    cout << j << " ";
+}
+
+// Function to print the solution including distance and paths
+void printSolution(int dist[], int parent[], int src, int size) {
+    cout << "Vertex \t Distance from Source \t Path" << endl;
+    for (int i = 0; i < size; i++) {
+        cout << i << " \t\t " << dist[i] << " \t\t " << src << " ";
+        printPath(parent, i);
+        cout << endl;
+    }
+}
+
+
+int findMinIndex(int Dist[], bool included[], int n){
+    int minValue = INT_MAX, minIndex;
+    for(int i = 0; i<n; i++){
+        if(!included[i] && Dist[i] < minValue){
+            minValue = Dist[i];
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
+void primsalgo(int graph[N][N], int n){
+    int Parent[N];
+    int Dist[N];
+    bool included[N];
+    
+    for(int i = 0; i< n; i++){
+        Parent[i] = -1;
+        Dist[i] = INT_MAX;
+        included[i] = false;
+    }
+    
+    Dist[0] = 0;
+    // Parent[0] = -1;
+    
+    for(int count = 0 ; count < n-1; count++){
+        int u = findMinIndex(Dist, included, n);
+        
+        included[u] = true;
+        for(int v = 0; v<n; v++){
+            if(!included[v] && Dist[u]+graph[u][v]<Dist[v] && graph[u][v]){
+                Dist[v] = Dist[u]+graph[u][v];
+                Parent[v] = u;
+            }
+        }
+    }
+    // Print the MST
+    printSolution(Dist, Parent, 0, 5);
+}
+
+int main(){
+    int graph[N][N] = {
+        {0, 2, 0, 6, 0},
+        {2, 0, 3, 8, 5},
+        {0, 3, 0, 0, 7},
+        {6, 8, 0, 0, 9},
+        {0, 5, 7, 9, 0}
+    };
+
+    primsalgo(graph, N);
+    
+    return 0;
+
+}
