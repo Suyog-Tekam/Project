@@ -1,0 +1,113 @@
+# 10. Create BST and display preorder, inorder and postorder of the tree (same as previous question)
+If aksed for iterative then see..
+
+#include<iostream>
+ using namespace std;
+ 
+ struct Node{
+     int data;
+     Node* left;
+     Node* right;
+     Node(int value){
+         data = value;
+         left = nullptr;
+         right = nullptr;
+     }
+ };
+ 
+class BST{
+    private:
+        Node* root;
+        
+        void inorder(Node* node){
+            if(node == nullptr) return;
+            inorder(node->left);
+            cout<<node->data<<" ";
+            inorder(node->right);
+        }
+        
+        void preorder(Node* node){
+            if(node == nullptr) return;
+            cout<<node->data<<" ";
+            preorder(node->left);
+            preorder(node->right);
+        }
+        
+        void postorder(Node* node){
+            if(node == nullptr) return;
+            inorder(node->left);
+            inorder(node->right);
+            cout<<node->data<<" ";
+        }
+        
+    public:
+        BST(){
+            root = nullptr;
+        }
+        
+        void insert(int value){
+            // insert first element
+            Node* newNode = new Node(value);
+            if(root == nullptr) {
+                root = newNode;
+                return;
+            }
+            
+            Node* current = root;
+            Node* parent = nullptr;
+            
+            while(current != nullptr){
+                parent = current;
+                if(value < current->data){
+                    current = current ->left;
+                }
+                else{
+                    current = current->right;
+                }
+            }
+            
+            // insert other element
+            
+            if(value <parent->data){
+                parent -> left = newNode;
+            }
+            else{
+                parent ->right = newNode;
+            }
+        }
+        
+        void inorder(){
+            cout<<"Inorder in BST ";
+            inorder(root);
+            cout<<endl;
+        }
+        
+        void preorder(){
+            cout<<"Preorder in BST ";
+            preorder(root);
+            cout<<endl;
+        }
+        
+        void postorder(){
+            cout<<"Postorder in BST ";
+            postorder(root);
+            cout<<endl;
+        }    
+        
+};
+
+int main(){
+    BST bst;
+    bst.insert(50);
+    bst.insert(30);
+    bst.insert(70);
+    bst.insert(20);
+    bst.insert(40);
+    bst.insert(60);
+    bst.insert(80);
+
+    // Display preorder, inorder, and postorder traversals
+    bst.preorder();  // Should display: 50 30 20 40 70 60 80
+    bst.inorder();   // Should display: 20 30 40 50 60 70 80
+    bst.postorder(); // Should display: 20 40 30 60 80 70 50
+}
