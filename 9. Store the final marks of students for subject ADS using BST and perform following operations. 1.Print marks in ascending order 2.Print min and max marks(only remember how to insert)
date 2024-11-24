@@ -1,0 +1,123 @@
+9. Store the final marks of students for subject ADS using BST and perform following operations. 1.Print marks in ascending order 2.Print min and max marks(only remember how to insert)
+
+#include<iostream>
+ using namespace std;
+ 
+ struct Node{
+     int data;
+     Node* left;
+     Node* right;
+     Node(int value){
+         data = value;
+         left = nullptr;
+         right = nullptr;
+     }
+ };
+ 
+class BST{
+    private:
+        Node* root;
+        
+        void inorder(Node* node){
+            if(node == nullptr) return;
+            inorder(node->left);
+            cout<<node->data<<" ";
+            inorder(node->right);
+        }
+        
+        Node* minMark(Node* node){
+            while(node && node->left != nullptr){
+                node = node->left;
+            }
+            return node;
+        }
+        
+        Node* maxMark(Node* node){
+            while(node && node->right != nullptr){
+                node = node->right;
+            }
+            return node;
+        }
+        
+    public:
+        BST(){
+            root = nullptr;
+        }
+        
+        void insert(int value){
+            // insert first element
+            Node* newNode = new Node(value);
+            if(root == nullptr) {
+                root = newNode;
+                return;
+            }
+            
+            Node* current = root;
+            Node* parent = nullptr;
+            
+            while(current != nullptr){
+                parent = current;
+                if(value < current->data){
+                    current = current ->left;
+                }
+                else{
+                    current = current->right;
+                }
+            }
+            
+            // insert other element
+            
+            if(value <parent->data){
+                parent -> left = newNode;
+            }
+            else{
+                parent ->right = newNode;
+            }
+        }
+        
+        void AscendingOrder(){
+            cout<<"Elements in BST is ";
+            inorder(root);
+            cout<<endl;
+        }
+        
+        // if minimum mark present then print 
+        void minMark(){
+            Node* minNode = minMark(root);
+            if(minNode){
+                cout<<"Minimum node is "<<minNode->data<<endl;
+            }
+            else{
+                cout<<"BST is empty."<<endl;
+            }
+        }
+        
+        // if maximum mark present then print 
+        void maxMark(){
+            Node* maxNode = maxMark(root);
+            if(maxNode){
+                cout<<"Maximum node is "<<maxNode->data<<endl;
+            }
+            else{
+                cout<<"BST is empty."<<endl;
+            }
+        }
+};
+
+int main(){
+    BST bst;
+    bst.insert(85);
+    bst.insert(90);
+    bst.insert(78);
+    bst.insert(92);
+    bst.insert(88);
+    bst.insert(74);
+    bst.insert(95);
+
+    // Print the marks in ascending order
+    bst.AscendingOrder();
+
+    // Print the minimum and maximum marks
+    bst.minMark();
+    bst.maxMark();
+}
