@@ -1,0 +1,29 @@
+#20. Write a program to convert number from decimal to binary using stack.
+
+#include<iostream>
+#include<stack>
+using namespace std;
+
+void decimaltoBinary(int n){
+    stack<int> Binarys;
+    
+    while(n>0){
+        int temp = n%2;
+        n = n/2;
+        Binarys.push(temp);
+    }
+    
+    cout<<"Binary representation";
+    while(!Binarys.empty()){
+        cout<<Binarys.top();
+        Binarys.pop();
+    }
+}
+
+int main(){
+    int s;
+    cout<<"Enter a decimal number: ";
+    cin>>s;
+    decimaltoBinary(s);
+}
+
